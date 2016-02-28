@@ -1,0 +1,48 @@
+<html>
+<head>
+<script type="text/javascript"
+  src="dygraph-combined.js"></script>
+</head>
+<body>
+<div id="graphdiv2"
+  style="width:1200px; height:700px;"></div>
+<script type="text/javascript">
+    n = 600;
+    divs = [];
+    divs[0] = ['n'];
+    for (i=1; i < n/2; i++) {
+        divs[0].push(i);
+    }
+    csv = divs[0].join() + ",squaresum\n";
+    
+    for (i=1; i < n/2; i++) {
+        divs[i] = [i];
+        for (j=1; j< n/2; j++) {
+            if (i % j == 0 && j != 1) {
+                divs[i].push(j);
+            } else {
+                divs[i].push("");
+            }
+        } 
+        // now leave only primes and sums of squares of composition parts
+        ss = 0;
+        count = 0;
+        for (m in divs[i]) {
+            if (divs[i][m] != '') {
+                ss += divs[i][m];
+                count++;
+            }
+        }       
+        if (count == 2) {
+            ss = "";
+        }
+        csv += divs[i].join() + ","+ ss +"\n";
+    }
+  g2 = new Dygraph(
+    document.getElementById("graphdiv2"),
+    csv
+    ,{}          // options
+  );
+</script>
+</body>
+</html>
